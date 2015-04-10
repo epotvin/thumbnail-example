@@ -23,9 +23,7 @@ angular.module("example").config(['$urlRouterProvider', '$stateProvider', '$loca
 
 angular.module('example').controller('ExampleCtrl', ['$meteor', '$scope', function ($meteor, $scope) {
 
-    $scope.images = $meteor.collection(function () {
-        return Images.find();
-    });
+    $scope.images = $meteor.collection(Images, false);
 
     $scope.addImage = function () {
         $('<input type="file">').bind("change", function (event) {
@@ -34,22 +32,15 @@ angular.module('example').controller('ExampleCtrl', ['$meteor', '$scope', functi
     };
 
     $scope.url = function (image, store) {
-        if (!image) return null;
+        if (!image || !image.url) return null;
 
-        // Ideally, the following line would have worked
-        //return image.url({store: store});
-        var file = Images.findOne(image._id);
-        return file.url({store: store}) + '&updatedAt=' + file.copies[store].updatedAt.getTime();
+        return image.copies && image.copies[store] ? image.url({store: store}) + '&updatedAt=' + image.copies[store].updatedAt.getTime() : '';
     }
 
 }]);
 
 angular.module('example').controller('ImageCtrl', ['$scope', '$meteor', '$stateParams', function ($scope, $meteor, $stateParams) {
-    // Ideally, the following line would have worked
-    //$scope.image = $meteor.object(Images, $stateParams.imageId);
-
-    //Used this way, the image is not loader instantly on page refresh
-    $scope.image = Images.findOne($stateParams.imageId);
+    $scope.image = $meteor.object(Images, $stateParams.imageId, false);
 
     $scope.update = function() {
         $meteor.call('setThumbnail', $scope.image._id, $scope.coordinates);

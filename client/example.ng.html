@@ -5,12 +5,14 @@
         <tr>
             <th>Name</th>
             <th>Thumbnail</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="image in images">
             <td><a href="" ui-sref=".image({imageId: image._id})">{{image.original.name}}</a></td>
             <td><img class="thumbnail" ng-src="{{url(image, 'thumbnail')}}"></td>
+            <td><a href="" ng-click="images.remove(image)">X</a></td>
         </tr>
         </tbody>
     </table>

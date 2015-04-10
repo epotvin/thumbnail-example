@@ -1,6 +1,9 @@
 <h1>{{image.original.name}}</h1>
 
+Description: <input type="text" ng-model="image.description"><br>
+<input type="button" ng-click="image.save()" value="Save"><br><br>
+
 <div class="img-container">
-    <input type="button" ng-click="update()" value="Update">
+    <input type="button" ng-click="update()" value="Update thumbnail">
     <img cropper class="img-responsive" ng-src="{{url(image, 'original')}}" coordinates="coordinates">
 </div>

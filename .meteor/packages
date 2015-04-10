@@ -10,7 +10,7 @@ insecure
 
 mquandalle:bower
 
-urigo:angular@=0.7.2
+urigo:angular
 angularui:angular-ui-router
 
 cfs:standard-packages
